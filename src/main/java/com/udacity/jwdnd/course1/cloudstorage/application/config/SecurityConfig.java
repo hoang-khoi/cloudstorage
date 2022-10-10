@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage.config;
+package com.udacity.jwdnd.course1.cloudstorage.application.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
