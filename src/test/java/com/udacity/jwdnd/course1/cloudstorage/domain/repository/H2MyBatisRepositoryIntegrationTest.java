@@ -7,6 +7,7 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @MybatisTest
 class H2MyBatisRepositoryIntegrationTest {
@@ -25,7 +26,7 @@ class H2MyBatisRepositoryIntegrationTest {
     }
 
     @Test
-    void testSaveAndRetrieve() {
+    void testSaveAndFindByUsername_BasicFunctionality() {
         userRepository.save(dummyUser);
         User retrievedUser = userRepository.findByUsername("johny_bravo");
 
@@ -37,5 +38,11 @@ class H2MyBatisRepositoryIntegrationTest {
         expectedUser.setLastName("Bravo");
 
         assertEquals(expectedUser, retrievedUser);
+    }
+
+    @Test
+    void testFindBindUserName_NotFound_ReturnNull() {
+        User retrievedUser = userRepository.findByUsername("johny_bravo");
+        assertNull(retrievedUser);
     }
 }
