@@ -42,7 +42,6 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder, UserService userService) {
         return username -> {
-            System.out.println("DEBUG: username: " + username);
             User user = userService.getUserByUsername(username);
 
             if (user == null) {
