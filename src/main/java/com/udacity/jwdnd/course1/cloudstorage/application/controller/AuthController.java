@@ -27,6 +27,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     public String signUserUp(@ModelAttribute SignUpAttribute signUpAttribute, Model model) {
+        model.addAttribute("success", true);
+
         try {
             userService.createUser(
                     signUpAttribute.getFirstName(),
@@ -36,8 +38,8 @@ public class AuthController {
             );
         } catch (UserException e) {
             model.addAttribute("errorMessage", e.getMessage());
+            model.addAttribute("success", false);
         }
-        model.addAttribute("success", true);
 
         return "signup";
     }
