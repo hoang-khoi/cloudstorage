@@ -12,8 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginTests {
@@ -63,5 +62,14 @@ public class LoginTests {
 
         assertEquals(Helper.getTestUrl(port) + "/", driver.getCurrentUrl());
         assertEquals("Home", driver.getTitle());
+    }
+
+    @Test
+    void testLoginPage_Login_BadCredential_Failure() {
+        loginPage.goToPage(Helper.getTestUrl(port));
+        loginPage.login("meme", "lord");
+        assertTrue(Helper.webElementExists(loginPage.getDivErrorMessage()));
+        assertFalse(Helper.webElementExists(loginPage.getDivLoggedOutMessage()));
+        assertEquals("Invalid username or password", loginPage.getDivErrorMessage().getText());
     }
 }

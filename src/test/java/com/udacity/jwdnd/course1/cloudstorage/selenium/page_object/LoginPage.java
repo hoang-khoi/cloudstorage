@@ -13,7 +13,7 @@ public class LoginPage implements PageObject {
     @FindBy(id = "error-msg")
     private WebElement divErrorMessage;
 
-    @FindBy(id = "error-msg")
+    @FindBy(id = "logout-msg")
     private WebElement divLoggedOutMessage;
 
     @FindBy(id = "inputUsername")
