@@ -13,4 +13,7 @@ public class Helper {
 
         return true;
     }
+    public static String getTestUrl(int port) {
+        return String.format("http://localhost:%d", port);
+    }
 }

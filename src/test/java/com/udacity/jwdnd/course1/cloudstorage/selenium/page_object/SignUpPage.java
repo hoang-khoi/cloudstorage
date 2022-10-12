@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Getter
-public class LoginPage {
+public class SignUpPage implements PageObject {
     private final WebDriver driver;
 
     @FindBy(id = "inputFirstName")
@@ -31,7 +31,7 @@ public class LoginPage {
     @FindBy(id = "error-msg")
     private WebElement divErrorMessage;
 
-    public LoginPage(WebDriver driver) {
+    public SignUpPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
