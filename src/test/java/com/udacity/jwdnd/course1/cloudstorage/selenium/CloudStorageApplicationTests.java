@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage;
+package com.udacity.jwdnd.course1.cloudstorage.selenium;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.*;
@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 
 import java.io.File;
 import java.time.Duration;
@@ -37,12 +37,6 @@ class CloudStorageApplicationTests {
         if (this.driver != null) {
             driver.quit();
         }
-    }
-
-    @Test
-    public void getLoginPage() {
-        driver.get("http://localhost:" + this.port + "/login");
-        Assertions.assertEquals("Login", driver.getTitle());
     }
 
     /**
@@ -198,6 +192,4 @@ class CloudStorageApplicationTests {
         Assertions.assertFalse(driver.getPageSource().contains("HTTP Status 403 – Forbidden"));
 
     }
-
-
 }
