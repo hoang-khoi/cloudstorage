@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.selenium;
 
+import com.udacity.jwdnd.course1.cloudstorage.selenium.helper.Helper;
 import com.udacity.jwdnd.course1.cloudstorage.selenium.page_object.SignUpPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;

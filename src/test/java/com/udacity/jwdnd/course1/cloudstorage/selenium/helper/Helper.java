@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage.selenium;
+package com.udacity.jwdnd.course1.cloudstorage.selenium.helper;
 
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
