@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Repository
 public class DiskFileRepository implements FileRepository {
@@ -16,5 +18,24 @@ public class DiskFileRepository implements FileRepository {
         //noinspection ResultOfMethodCallIgnored
         ROOT_DIR.mkdir();
         multipartFile.transferTo(file);
+    }
+
+    @Override
+    public boolean existed(String name) {
+        File file = new File(ROOT_DIR, name);
+        return file.exists();
+    }
+
+    @Override
+    public void delete(String name) {
+        File file = new File(ROOT_DIR, name);
+        //noinspection ResultOfMethodCallIgnored
+        file.delete();
+    }
+
+    @Override
+    public List<String> listAll() {
+        //noinspection ConstantConditions
+        return Arrays.asList(ROOT_DIR.list());
     }
 }
