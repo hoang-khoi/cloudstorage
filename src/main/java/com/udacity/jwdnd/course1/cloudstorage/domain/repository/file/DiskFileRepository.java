@@ -38,4 +38,9 @@ public class DiskFileRepository implements FileRepository {
         //noinspection ConstantConditions
         return Arrays.asList(ROOT_DIR.list());
     }
+
+    @Override
+    public File getFileByName(String filename) {
+        return new File(ROOT_DIR, filename);
+    }
 }

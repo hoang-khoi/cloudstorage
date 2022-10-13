@@ -62,4 +62,14 @@ class DiskFileRepositoryTest {
         fileRepository.save(makeMockedMultipartFile());
         assertEquals(List.of(DUMMY_FILE_NAME), fileRepository.listAll());
     }
+
+    @Test
+    void testGetFileByName() throws IOException {
+        fileRepository.save(makeMockedMultipartFile());
+        File file = fileRepository.getFileByName(DUMMY_FILE_NAME);
+        assertArrayEquals(
+                Charsets.UTF_8.encode("Sample content").array(),
+                Files.readAllBytes(file.toPath())
+        );
+    }
 }
