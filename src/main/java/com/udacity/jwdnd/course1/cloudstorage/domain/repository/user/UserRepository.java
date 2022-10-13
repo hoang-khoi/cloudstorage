@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage.domain.repository;
+package com.udacity.jwdnd.course1.cloudstorage.domain.repository.user;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.entity.User;
 import org.apache.ibatis.annotations.Insert;

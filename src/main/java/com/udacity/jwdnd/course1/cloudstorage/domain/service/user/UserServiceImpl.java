@@ -1,7 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.domain.service.user;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.entity.User;
-import com.udacity.jwdnd.course1.cloudstorage.domain.repository.UserRepository;
+import com.udacity.jwdnd.course1.cloudstorage.domain.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
