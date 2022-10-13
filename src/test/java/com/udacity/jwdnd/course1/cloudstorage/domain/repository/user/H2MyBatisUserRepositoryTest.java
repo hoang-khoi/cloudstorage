@@ -1,7 +1,6 @@
-package com.udacity.jwdnd.course1.cloudstorage.domain.repository;
+package com.udacity.jwdnd.course1.cloudstorage.domain.repository.user;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.entity.User;
-import com.udacity.jwdnd.course1.cloudstorage.domain.repository.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
@@ -11,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @MybatisTest
-class H2MyBatisRepositoryIntegrationTest {
+class H2MyBatisUserRepositoryTest {
 
     private User dummyUser;
     @Autowired
