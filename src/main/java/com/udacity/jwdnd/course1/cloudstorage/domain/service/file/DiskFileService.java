@@ -1,6 +1,5 @@
 package com.udacity.jwdnd.course1.cloudstorage.domain.service.file;
 
-import com.udacity.jwdnd.course1.cloudstorage.domain.repository.file.FileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
