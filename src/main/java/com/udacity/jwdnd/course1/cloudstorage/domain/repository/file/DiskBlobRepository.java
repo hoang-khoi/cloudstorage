@@ -21,4 +21,10 @@ public class DiskBlobRepository implements BlobRepository {
 
         multipartFile.transferTo(file);
     }
+
+    @Override
+    public File getFileByKey(String key) {
+        File file = new File(key);
+        return file.exists() ? file : null;
+    }
 }

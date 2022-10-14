@@ -45,4 +45,18 @@ class DiskBlobRepositoryTest {
         assertTrue(DUMMY_FILE_WITHOUT_PARENT.exists());
         assertArrayEquals(DUMMY_CONTENT_BYTES, Files.readAllBytes(DUMMY_FILE_WITHOUT_PARENT.toPath()));
     }
+
+    @Test
+    void testGetFileByKey_NotFound_ReturnsNull() {
+        File file = blobRepository.getFileByKey("not/existed/at.all");
+        assertNull(file);
+    }
+
+    @Test
+    void testGetFileByKey_Found_ReturnsTheCorrectFile() throws IOException {
+        blobRepository.save(DUMMY_MULTIPART_FILE, DUMMY_FILE_PATH_WITH_PARENT);
+        File file = blobRepository.getFileByKey(DUMMY_FILE_PATH_WITH_PARENT);
+        assertTrue(file.exists());
+        assertArrayEquals(DUMMY_CONTENT_BYTES, Files.readAllBytes(file.toPath()));
+    }
 }
