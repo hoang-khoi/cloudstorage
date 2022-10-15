@@ -61,9 +61,16 @@ class DiskBlobRepositoryTest {
     }
 
     @Test
-    void testDeleteFileByKey() throws IOException {
+    void testDeleteFileByKey_FileExisted_FileDeleted() throws IOException {
         blobRepository.save(DUMMY_MULTIPART_FILE, DUMMY_FILE_PATH_WITH_PARENT);
         assertTrue(DUMMY_FILE_WITH_PARENT.exists());
+        blobRepository.deleteFileByKey(DUMMY_FILE_PATH_WITH_PARENT);
+        assertFalse(DUMMY_FILE_WITH_PARENT.exists());
+    }
+
+    @Test
+    void testDeleteFileByKey_FileNotExisted() {
+        assertFalse(DUMMY_FILE_WITH_PARENT.exists());
         blobRepository.deleteFileByKey(DUMMY_FILE_PATH_WITH_PARENT);
         assertFalse(DUMMY_FILE_WITH_PARENT.exists());
     }
