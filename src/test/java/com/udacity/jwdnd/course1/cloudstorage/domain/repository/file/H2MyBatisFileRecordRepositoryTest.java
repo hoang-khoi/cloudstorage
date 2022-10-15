@@ -27,6 +27,7 @@ class H2MyBatisFileRecordRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        // Setup test user
         if (userRepository.findByUsername(DUMMY_USERNAME) == null) {
             User user = new User();
             user.setUsername(DUMMY_USERNAME);
@@ -34,37 +35,48 @@ class H2MyBatisFileRecordRepositoryTest {
             userRepository.save(user);
         }
 
+        // Set up existing files
         ownerUser = userRepository.findByUsername(DUMMY_USERNAME);
+        fileRecordRepository.save(dummyFileRecord(ownerUser, "dummy.txt"));
+        fileRecordRepository.save(dummyFileRecord(ownerUser, "foobar.txt"));
     }
 
     /**
      * This test is far from ideal, but it gets the job done, for now.
      */
     @Test
-    void testSaveAndGetFilesBelongToUser_FileExist() {
-        fileRecordRepository.save(dummyFileRecord(ownerUser));
+    void testGetFileBelongToUser_Exist_ReturnsCorrectObject() {
+        FileRecord expectedFileRecord = new FileRecord(1, "dummy.txt", "application/pdf", 6996, ownerUser.getId());
 
-        FileRecord expectedFileRecord = new FileRecord();
-        expectedFileRecord.setId(1);
-        expectedFileRecord.setMediaType("application/pdf");
-        expectedFileRecord.setName("dummy.pdf");
-        expectedFileRecord.setSize(6996);
-        expectedFileRecord.setOwnerUserId(ownerUser.getId());
-
-        List<FileRecord> expectedFileRecords = List.of(expectedFileRecord);
-
-        FileRecord retrievedFileRecord = fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "dummy.pdf");
+        FileRecord retrievedFileRecord = fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "dummy.txt");
         assertEquals(expectedFileRecord, retrievedFileRecord);
+    }
 
+    @Test
+    void testGetFileBelongToUser_NotExist_ReturnsNull() {
+        FileRecord retrievedFileRecord = fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "dummy.lolz");
+        assertNull(retrievedFileRecord);
+    }
+
+    @Test
+    void testGetFilesBelongToUser_Exist_ReturnsCorrectList() {
+        List<FileRecord> expectedFileRecords = List.of(
+                new FileRecord(1, "dummy.txt", "application/pdf", 6996, ownerUser.getId()),
+                new FileRecord(2, "foobar.txt", "application/pdf", 6996, ownerUser.getId())
+        );
         List<FileRecord> retrievedFileRecords = fileRecordRepository.getFilesBelongToUser(ownerUser.getId());
         assertEquals(expectedFileRecords, retrievedFileRecords);
+    }
 
+    @Test
+    void testGetFilesBelongToUser_NotExist_ReturnsEmptyList() {
+        List<FileRecord> retrievedFileRecords = fileRecordRepository.getFilesBelongToUser(12873);
+        assertEquals(0, retrievedFileRecords.size());
     }
 
     @Test
     void testDeleteFileByKey_FileExist_SuccessfullyRemoved() {
-        FileRecord fileRecord = dummyFileRecord(ownerUser);
-        fileRecord.setName("mistake.pdf");
+        FileRecord fileRecord = dummyFileRecord(ownerUser, "mistake.pdf");
 
         fileRecordRepository.save(fileRecord);
         assertNotNull(fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "mistake.pdf"));
@@ -85,9 +97,9 @@ class H2MyBatisFileRecordRepositoryTest {
         assertNull(retrievedFileRecord);
     }
 
-    private FileRecord dummyFileRecord(User ownerUser) {
+    private FileRecord dummyFileRecord(User ownerUser, String name) {
         FileRecord fileRecord = new FileRecord();
-        fileRecord.setName("dummy.pdf");
+        fileRecord.setName(name);
         fileRecord.setMediaType(MediaType.APPLICATION_PDF_VALUE);
         fileRecord.setSize(6996);
         fileRecord.setOwnerUserId(12);
