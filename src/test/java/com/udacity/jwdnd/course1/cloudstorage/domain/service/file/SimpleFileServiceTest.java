@@ -55,4 +55,10 @@ class SimpleFileServiceTest {
         verify(mockBlobRepository, times(1)).save(mockMultipartFile, "files/khoi/archive.zip");
         verify(mockFileRecordRepository, times(1)).save(expectedFileRecord);
     }
+
+    @Test
+    void testGetFile() {
+        fileService.getFile(user, "archive.zip");
+        verify(mockBlobRepository, times(1)).getFileByKey("files/khoi/archive.zip");
+    }
 }
