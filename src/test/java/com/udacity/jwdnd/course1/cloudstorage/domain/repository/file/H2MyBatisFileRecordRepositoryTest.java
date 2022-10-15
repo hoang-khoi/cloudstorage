@@ -72,19 +72,19 @@ class H2MyBatisFileRecordRepositoryTest {
     }
 
     @Test
-    void testDeleteFileByKey_FileExist_SuccessfullyRemoved() {
+    void testDeleteFileByName_FileExist_SuccessfullyRemoved() {
         FileRecord fileRecord = dummyFileRecord(ownerUser, "mistake.pdf");
 
         fileRecordRepository.save(fileRecord);
         assertNotNull(fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "mistake.pdf"));
-        fileRecordRepository.deleteFileByKey(ownerUser.getId(), "mistake.pdf");
+        fileRecordRepository.deleteFileByName(ownerUser.getId(), "mistake.pdf");
         assertNull(fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "mistake.pdf"));
     }
 
     @Test
-    void testDeleteFileByKey_FileNotExist_NothingHappens() {
+    void testDeleteFileByName_FileNotExist_NothingHappens() {
         assertNull(fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "mistake.pdf"));
-        fileRecordRepository.deleteFileByKey(ownerUser.getId(), "mistake.pdf");
+        fileRecordRepository.deleteFileByName(ownerUser.getId(), "mistake.pdf");
         assertNull(fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "mistake.pdf"));
     }
 

@@ -28,5 +28,5 @@ public interface FileRecordRepository {
     List<FileRecord> getFilesBelongToUser(long ownerUserId);
 
     @Delete("DELETE FROM FILES WHERE userid=#{ownerUserId} AND filename=#{key}")
-    void deleteFileByKey(long ownerUserId, String key);
+    void deleteFileByName(long ownerUserId, String key);
 }
