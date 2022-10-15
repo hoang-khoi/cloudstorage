@@ -41,9 +41,6 @@ class H2MyBatisFileRecordRepositoryTest {
         fileRecordRepository.save(dummyFileRecord(ownerUser, "foobar.txt"));
     }
 
-    /**
-     * This test is far from ideal, but it gets the job done, for now.
-     */
     @Test
     void testGetFileBelongToUser_Exist_ReturnsCorrectObject() {
         FileRecord expectedFileRecord = new FileRecord(1, "dummy.txt", "application/pdf", 6996, ownerUser.getId());

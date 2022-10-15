@@ -26,7 +26,6 @@ class UserServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        //noinspection resource
         MockitoAnnotations.openMocks(this);
 
         userService = new UserServiceImpl(
