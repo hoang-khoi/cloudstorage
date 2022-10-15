@@ -8,19 +8,22 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @MybatisTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class H2MyBatisFileRecordRepositoryTest {
     private static final String DUMMY_USERNAME = "mike_hunt";
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private FileRecordRepository fileRecordRepository;
+
+    private User ownerUser;
 
     @BeforeEach
     void setUp() {
@@ -30,6 +33,8 @@ class H2MyBatisFileRecordRepositoryTest {
 
             userRepository.save(user);
         }
+
+        ownerUser = userRepository.findByUsername(DUMMY_USERNAME);
     }
 
     /**
@@ -37,7 +42,6 @@ class H2MyBatisFileRecordRepositoryTest {
      */
     @Test
     void testSaveAndGetFilesBelongToUser_FileExist() {
-        User ownerUser = userRepository.findByUsername(DUMMY_USERNAME);
         fileRecordRepository.save(dummyFileRecord(ownerUser));
 
         FileRecord expectedFileRecord = new FileRecord();
@@ -58,8 +62,26 @@ class H2MyBatisFileRecordRepositoryTest {
     }
 
     @Test
+    void testDeleteFileByKey_FileExist_SuccessfullyRemoved() {
+        FileRecord fileRecord = dummyFileRecord(ownerUser);
+        fileRecord.setName("mistake.pdf");
+
+        fileRecordRepository.save(fileRecord);
+        assertNotNull(fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "mistake.pdf"));
+        fileRecordRepository.deleteFileByKey(ownerUser.getId(), "mistake.pdf");
+        assertNull(fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "mistake.pdf"));
+    }
+
+    @Test
+    void testDeleteFileByKey_FileNotExist_NothingHappens() {
+        assertNull(fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "mistake.pdf"));
+        fileRecordRepository.deleteFileByKey(ownerUser.getId(), "mistake.pdf");
+        assertNull(fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "mistake.pdf"));
+    }
+
+    @Test
     void testGetFilesBelongToUser_FileNotExisted_ReturnsNull() {
-        FileRecord retrievedFileRecord = fileRecordRepository.getFileBelongToUser(1, "404.pdf");
+        FileRecord retrievedFileRecord = fileRecordRepository.getFileBelongToUser(ownerUser.getId(), "404.pdf");
         assertNull(retrievedFileRecord);
     }
 

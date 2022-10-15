@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.domain.repository.file;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.entity.FileRecord;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -25,4 +26,7 @@ public interface FileRecordRepository {
             "FROM FILES " +
             "WHERE userid=#{ownerUserId}")
     List<FileRecord> getFilesBelongToUser(long ownerUserId);
+
+    @Delete("DELETE FROM FILES WHERE userid=#{ownerUserId} AND filename=#{key}")
+    void deleteFileByKey(long ownerUserId, String key);
 }
