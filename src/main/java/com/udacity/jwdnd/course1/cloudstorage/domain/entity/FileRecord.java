@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FileRecord {
-    private int id;
+    private long id;
     private String name;
     private String mediaType;
     private long size;
