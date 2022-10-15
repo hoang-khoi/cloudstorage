@@ -13,4 +13,6 @@ public interface FileService {
     List<FileRecord> listFileRecords(User user);
 
     File getFile(User user, String name);
+
+    void delete(User user, String name);
 }

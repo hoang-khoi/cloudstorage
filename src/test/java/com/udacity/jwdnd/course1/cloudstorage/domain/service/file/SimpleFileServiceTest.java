@@ -61,4 +61,11 @@ class SimpleFileServiceTest {
         fileService.getFile(user, "archive.zip");
         verify(mockBlobRepository, times(1)).getFileByKey("files/khoi/archive.zip");
     }
+
+    @Test
+    void testDeleteFile() {
+        fileService.delete(user, "archive.zip");
+        verify(mockFileRecordRepository, times(1)).deleteFileByName(1, "archive.zip");
+        verify(mockBlobRepository, times(1)).deleteFileByKey("files/khoi/archive.zip");
+    }
 }

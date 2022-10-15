@@ -48,8 +48,14 @@ public class SimpleFileService implements FileService {
     }
 
     @Override
-    public File getFile(User user, String name) {
-        String blobKey = makeBlobKey(user, name);
+    public File getFile(User user, String filename) {
+        String blobKey = makeBlobKey(user, filename);
         return blobRepository.getFileByKey(blobKey);
+    }
+
+    @Override
+    public void delete(User user, String filename) {
+        fileRecordRepository.deleteFileByName(user.getId(), filename);
+        blobRepository.deleteFileByKey(makeBlobKey(user, filename));
     }
 }
