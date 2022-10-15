@@ -27,4 +27,11 @@ public class DiskBlobRepository implements BlobRepository {
         File file = new File(key);
         return file.exists() ? file : null;
     }
+
+    @Override
+    public void deleteFileByKey(String key) {
+        File file = new File(key);
+        //noinspection ResultOfMethodCallIgnored
+        file.delete();
+    }
 }

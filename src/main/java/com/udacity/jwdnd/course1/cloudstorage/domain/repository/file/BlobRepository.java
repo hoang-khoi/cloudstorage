@@ -12,4 +12,5 @@ public interface BlobRepository {
      * @return null if there is no file associated with the key.
      */
     File getFileByKey(String key);
+    void deleteFileByKey(String key);
 }
