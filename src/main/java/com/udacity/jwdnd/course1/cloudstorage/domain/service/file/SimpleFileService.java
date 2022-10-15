@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +35,10 @@ public class SimpleFileService implements FileService {
         } catch (IOException e) {
             throw new FileServiceException("Cannot save the blob.", e);
         }
+    }
+
+    @Override
+    public List<FileRecord> listFileRecords(User user) {
+        return fileRecordRepository.getFilesBelongToUser(user.getId());
     }
 }
